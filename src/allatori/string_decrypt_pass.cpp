@@ -20,6 +20,7 @@
 #include "libca/str/utf16_string.hpp"
 #include "libca/str/utf8_string.hpp"
 
+#include "allatori/junk_code_strip_pass.hpp"
 #include "mjbase/model/resource_model.hpp"
 #include "mjbase/pass/method_rewrite_util.hpp"
 
@@ -1405,6 +1406,15 @@ Result<void, std::string> registerAll(mjbase::spi::PassNameRegistry& reg)
             " context) into plaintext ldc via an inline bytecode interpreter.");
         r.is_err()) {
         return Err(std::string("allatori.StringDecrypt"));
+    }
+    if (Result<void, mjbase::spi::RegistryError> r2 = reg.registerMethodPass(
+            "allatori.JunkCodeStrip",
+            [] { return std::make_unique<AllatoriJunkCodeStripPass>(); },
+            "Strip Allatori dead code and opaque predicates: static-field final-value"
+            " analysis + constant-resolved branch rewrite + unreachable-run DCE,"
+            " composed with builtin constant-fold / stack-op / load-val cleanup.");
+        r2.is_err()) {
+        return Err(std::string("allatori.JunkCodeStrip"));
     }
     return Ok();
 }
