@@ -1,4 +1,4 @@
-# deobf-allatori
+# analysis-allatori
 
 ## What it is
 
@@ -9,7 +9,7 @@ Allatori 混淆家族的 deobf 插件仓：mjbase pass-pack 静态链接 + 独�
 需要本地 mjbase 检出且含 plugin 接口（plugin-api 分支及以上），默认找 `../mjbase-plugin-api`，用 `MJBASE_DIR` 覆盖：
 
 ```sh
-MJBASE_DIR=/d/WorkSpace/mjbase-plugin-api xmake f --with_tests=y
+MJBASE_DIR=/path/to/mjbase-plugin-api xmake f --with_tests=y
 xmake build allatori_cli
 ```
 
