@@ -8,32 +8,32 @@
 
 ## 关键字成员名
 
-成员名直接使用 Java 关键字,字段与方法都出现,同名方法按重载并存。9.x 官方 demo jar 的 javap 成员表原文:
+成员名直接使用 Java 关键字,字段与方法都出现,同名方法按重载并存。9.x 官方 demo jar 的 javap 成员表(节选,类名已脱敏,占位符见各文档):
 
 ```text
-public final class DataOfSquare {
+public final class obf4 {
   int byte;
   java.util.ArrayList enum;
-  SquarePanel do;
+  obf5 do;
   public void true(int);
-  public DataOfSquare(int);
+  public obf4(int);
   public static java.lang.String true(java.lang.String);
 }
 
-public final class ThreadsController extends java.lang.Thread {
+public final class obf3 extends java.lang.Thread {
   java.util.ArrayList catch;
   java.util.ArrayList super;
   public static int false;
-  Tuple break;
-  Tuple byte;
+  obf6 break;
+  obf6 byte;
   int enum;
   long do;
   private void true(int);
   private void super();
   private void final();
-  private Tuple true();
+  private obf6 true();
   private void this();
-  private void true(Tuple);
+  private void true(obf6);
   public void run();
   private void break();
   private void true();

@@ -1,18 +1,18 @@
 # 死代码与 opaque 注入
 
-Allatori 在方法体内注入不改变语义的垃圾指令与恒假分支,抬升阅读成本、干扰模式识别。9.x 官方 demo jar 的实测形态(javap 原文):
+Allatori 在方法体内注入不改变语义的垃圾指令与恒假分支,抬升阅读成本、干扰模式识别。9.x 官方 demo jar 的实测形态(javap 节选,标识符与常量已脱敏):
 
 ## 死常量块
 
 方法头部与语句之间成对出现,栈平衡、无副作用:
 
 ```text
-public Main();
+public obf1();
   Code:
-     0: sipush        -22449
-     3: sipush        -27677
-     6: sipush        32308
-     9: sipush        -4623
+     0: sipush        11111
+     3: sipush        -22222
+     6: sipush        31313
+     9: sipush        -4141
     12: pop2
     13: pop2
     14: aload_0
@@ -29,16 +29,16 @@ public Main();
 javac 会折叠的常量运算被替换为指令序列,反编译呈现为算式:
 
 ```text
-24: bipush        -3
-26: ineg                // "--3" 渲染:双 neg
-44: iconst_3
-45: ixor                // "(2 ^ 3)"
-46: sipush        4028
-49: sipush        29039
-52: iand                // "0xFBC & 0x716F"
+24: bipush        -8
+26: ineg                // "--8" 渲染:双 neg
+44: iconst_1
+45: ixor                // "(2 ^ 1)"
+46: sipush        4369
+49: sipush        8738
+52: iand                // "0x1111 & 0x2222"
 ```
 
-- 典型落点:`setSize(0xFBC & 0x716F, 0x257E & 0x5BAD)` 这类实参位置。
+- 典型落点:`setSize(0x1111 & 0x2222, 0x4444 & 0x8888)` 这类实参位置。
 - 清偿:常量折叠 + 代数化简(双 neg 消除、xor/and 常量传播)。
 
 ## opaque 谓词与死分支
@@ -46,7 +46,7 @@ javac 会折叠的常量运算被替换为指令序列,反编译呈现为算式:
 ```java
 switch (keyCode) {
     …
-    if (ThreadsController.false == (1 ^ 3)) break;   // 恒假:static int false ≠ 2
+    if (obf3.false == (1 ^ 3)) break;   // 恒假:static int false ≠ 2
     … = 3 & 5;
     return;
 }

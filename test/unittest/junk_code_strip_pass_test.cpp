@@ -82,7 +82,7 @@ TEST(JunkCodeStripTest, removesDeadConstantBlock)
     EXPECT_EQ(ops[0], Op::RETURN);
 }
 
-// 未折叠常量表达式:sipush 4028; sipush 29039; iand → 单常量 + ireturn。
+// 未折叠常量表达式:sipush 4369; sipush 8738; iand → 单常量 + ireturn。
 TEST(JunkCodeStripTest, foldsUnfoldedConstantExpression)
 {
     FixtureBuilder b("t/C");

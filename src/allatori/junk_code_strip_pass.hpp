@@ -11,9 +11,9 @@ namespace allatori {
 /// 三形态清偿路径(9.x 官方 demo jar 实测,见 doc/junk-code.md):
 ///   - 死常量块(`sipush×4 + pop2×2` / `iconst_1 dup pop2` / float junk):
 ///     RedundantLoadValEliminator + StackOperationSimplifier;
-///   - 未折叠常量表达式(`bipush -3; ineg; ineg` / `sipush 4028; sipush 29039;
+///   - 未折叠常量表达式(`bipush -8; ineg; ineg` / `sipush 4369; sipush 8738;
 ///     iand`):ConstantFolder(内置件);
-///   - opaque 谓词与死分支(`if (ThreadsController.false == (1 ^ 3))` /
+///   - opaque 谓词与死分支(`if (obf3.false == (1 ^ 3))` /
 ///     `while (false)`):本 pass 核心——静态字段终值分析 + 邻接指令模式
 ///     匹配改写 + 不可达 run 清除。
 ///
